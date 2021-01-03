@@ -26,7 +26,8 @@ call vundle#begin()
   Plugin 'altercation/vim-colors-solarized'
   Plugin 'scrooloose/nerdtree'
   Plugin 'kien/ctrlp.vim'
-  Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+  Plugin 'vim-airline/vim-airline'
+  Plugin 'vim-airline/vim-airline-themes'
   " add more Vundle plugins here
 
 call vundle#end()
@@ -105,6 +106,13 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Nerdtree settings
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+" Airline configuration
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#formatter = 'default'
 
 " Python settings
 au BufNewFile,BufRead *.py
