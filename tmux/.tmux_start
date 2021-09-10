@@ -1,0 +1,57 @@
+#!/bin/bash!/bin/bash
+#
+# This  script automatically creates a tmux environment for the workspace specified
+# in the first argument.
+#
+
+function _start_aurora() {
+  
+  local nas_dir=""
+  local gs2_dir=""
+  local kubectl_dir=""
+
+  echo "Starting the AURORA development workspace"
+
+  tmux new-session \; \
+   rename-window deds \; send-keys "workon deds; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon deds" C-m C-l \; \
+    split-window \; send-keys "workon deds" C-m C-l \; \
+   new-window -n tmtc \; send-keys "workon tmtc; tmtc_cd; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon tmtc; tmtc_cd debug" C-m C-l \; \
+    split-window \; send-keys "workon tmtc; tmtc_cd" C-m C-l \; \
+   new-window -n arms \; send-keys "workon arms; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon arms" C-m C-l \; \
+    split-window \; send-keys "workon arms" C-m C-l \; \
+   new-window -n ftms \; send-keys "workon ftms; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon ftms" C-m C-l \; \
+    split-window \; send-keys "workon ftms" C-m C-l \; \
+   new-window -n asms \; send-keys "workon asms; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon asms" C-m C-l \; \
+    split-window \; send-keys "workon asms" C-m C-l \; \
+   new-window -n k8s \; \
+   new-window -n misc \; \
+   select-window -t "deds" \; \
+  attach
+
+}
+
+function start_tmux() {
+
+  local wrk_space=$1
+  local DORBIT_AURORA="dorbit/aurora"
+
+  [ ! -z "$TMUX" ] && echo "TMUX is already running" && return 0
+
+  # Default behaviour
+  if [ -z $wrk_space ]; then
+    start_tmux $DORBIT_AURORA
+    return $?
+  fi
+
+  if [ "$wrk_space" = "$DORBIT_AURORA" ]; then
+    _start_aurora
+  fi
+
+  return $?
+
+} 
