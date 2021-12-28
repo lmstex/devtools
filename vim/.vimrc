@@ -28,6 +28,7 @@ call vundle#begin()
   Plugin 'kien/ctrlp.vim'
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
+  Plugin 'iamcco/markdown-preview.nvim' 
   " add more Vundle plugins here
 
 call vundle#end()
@@ -90,6 +91,9 @@ map <leader>q gqip
 set t_Co=256
 set background=dark
 
+set spell spelllang=en_us
+set directory^=$HOME/.vim/swap//
+
 " solarized color scheme is available in
 " https://raw.github.com/altercation/vim-colors-solarized/master/colors/solarized.vim
 let g:solarized_termcolors=256
@@ -100,6 +104,7 @@ colorscheme solarized
 " Ctrlp configurations
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_show_hidden = 1
 
 " YouCompleteMe settings
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -119,14 +124,17 @@ let g:airline#extensions#tabline#left_alt_sep = '>'
 " Python settings
 au BufNewFile,BufRead *.py
     \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=85
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-    \ set foldmethod=indent
-    \ set foldlevel=99
+    \ softtabstop=4
+    \ shiftwidth=4
+    \ textwidth=85
+    \ colorcolumn=85
+    \ expandtab
+    \ autoindent
+    \ fileformat=unix
+    \ foldmethod=indent
+    \ foldlevel=99 
+
+
 
 python3 << EOF
 import os
@@ -134,7 +142,8 @@ import sys
 if 'VIRTUAL_ENV' in os.environ:
     project_base_dir = os.environ['VIRTUAL_ENV']
     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
+    exec(compile(open(activate_this, "rb").read(), activate_this, 'exec'),  dict(__file__=activate_this))
+    # execfile(activate_this, dict(__file__=activate_this))
 EOF
 
 " HTML and javascript settings
@@ -148,3 +157,13 @@ au BufNewFile,BufRead *.js, *.html, *.css
     \ set fileformat=unix
     \ set foldmethod=indent
     \ set foldlevel=99
+
+" Markdown preview settings
+let g:mkdp_auto_start = 0
+let g:mkdp_browser = ''
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+nmap <C-p> <Plug>MarkdownPreviewToggle
+
+" Configurarion (.conf) file settings
+autocmd BufNewFile,BufRead *.conf set syntax=sh
