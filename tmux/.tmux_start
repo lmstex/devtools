@@ -4,52 +4,68 @@
 # in the first argument.
 #
 
-function _start_aurora() {
-  
-  local nas_dir=""
-  local gs2_dir=""
-  local kubectl_dir=""
+function _start_euler() {
 
-  echo "Starting the AURORA development workspace"
+  local euler_dir=""
 
-  tmux new-session \; \
-   rename-window deds \; send-keys "workon deds; vim" C-m C-l \; \
-    split-window -h \; send-keys "workon deds" C-m C-l \; \
-    split-window \; send-keys "workon deds" C-m C-l \; \
-   new-window -n tmtc \; send-keys "workon tmtc; tmtc_cd; vim" C-m C-l \; \
-    split-window -h \; send-keys "workon tmtc; tmtc_cd debug" C-m C-l \; \
-    split-window \; send-keys "workon tmtc; tmtc_cd" C-m C-l \; \
-   new-window -n arms \; send-keys "workon arms; vim" C-m C-l \; \
-    split-window -h \; send-keys "workon arms" C-m C-l \; \
-    split-window \; send-keys "workon arms" C-m C-l \; \
-   new-window -n ftms \; send-keys "workon ftms; vim" C-m C-l \; \
-    split-window -h \; send-keys "workon ftms" C-m C-l \; \
-    split-window \; send-keys "workon ftms" C-m C-l \; \
-   new-window -n asms \; send-keys "workon asms; vim" C-m C-l \; \
-    split-window -h \; send-keys "workon asms" C-m C-l \; \
-    split-window \; send-keys "workon asms" C-m C-l \; \
-   new-window -n k8s \; \
+  echo "Starting the EULER development workspace"
+
+  tmux new-session -s euler \; \
+   rename-window "EULER" \; send-keys "workon euler; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon euler" C-m C-l \; \
+    split-window \; send-keys "workon euler" C-m C-l \; \
+   new-window -n "EULER DOCS" \; send-keys "workon euler" C-m C-l \; \
+    split-window -h \; send-keys "workon euler" C-m C-l \; \
+    split-window \; send-keys "workon euler" C-m C-l \; \
    new-window -n misc \; \
-   select-window -t "deds" \; \
+   select-window -t "EULER" \; \
   attach
+}
+
+
+function _start_filia() {
+  
+  local filia_dir=""
+
+  echo "Starting the FILIA development workspace"
+
+  tmux new-session -s filia \; \
+   rename-window "FILIA OS" \; send-keys "workon payany; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon payany" C-m C-l \; \
+    split-window \; send-keys "workon payany" C-m C-l \; \
+   new-window -n "FILIA APP" \; send-keys "workon payany; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon payany" C-m C-l \; \
+    split-window \; send-keys "workon payany" C-m C-l \; \
+     new-window -n NOTES \; send-keys "vim $HOME/notes/journal.md" C-m C-l \; \
+   new-window -n RPI-SSH \; \
+   new-window -n misc \; \
+   select-window -t "FILIA OS" \; \
+  attach
+
 
 }
 
 function start_tmux() {
 
   local wrk_space=$1
-  local DORBIT_AURORA="dorbit/aurora"
+  local FILIA="filia"
+  local EULER="euler"
 
-  [ ! -z "$TMUX" ] && echo "TMUX is already running" && return 0
+  [ -n "$TMUX" ] && tmux ls | grep $wrk_space && echo "TMUX session is already running" && return 0
+  #[ ! -z "$TMUX" ] && echo "TMUX is already running" && return 0
 
   # Default behaviour
   if [ -z $wrk_space ]; then
-    start_tmux $DORBIT_AURORA
+    start_tmux $FILIA
     return $?
   fi
 
-  if [ "$wrk_space" = "$DORBIT_AURORA" ]; then
-    _start_aurora
+  if [ "$wrk_space" = "$EULER" ]; then
+    _start_euler
+  fi
+
+  if [ "$wrk_space" = "$FILIA" ]; then
+    _start_filia
   fi
 
   return $?
