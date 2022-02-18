@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Several utility scripts to support development activity
+
+
+function nuke-proc {
+  if t=$(ps -fae | grep -e "$1 " | grep -v "grep"); then
+     echo $t | awk '{print $2}' | xargs kill -9
+     echo "Process terminated"
+  else
+    echo "Found no process matching $1"
+  fi
+}
