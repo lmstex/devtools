@@ -45,11 +45,35 @@ function _start_filia() {
 
 }
 
+
+function _start_arduino() {
+
+  local arduino_dir=""
+
+  echo "Starting the ARDUINO development workspace"
+
+  tmux new-session -s arduino \; \
+   rename-window "ARDUINO" \; send-keys "workon arduino; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon arduino" C-m C-l \; \
+    split-window \; send-keys "workon arduino" C-m C-l \; \
+   new-window -n "ARDUINO MISC" \; send-keys "workon arduino; vim" C-m C-l \; \
+    split-window -h \; send-keys "workon arduino" C-m C-l \; \
+    split-window \; send-keys "workon arduino" C-m C-l \; \
+   new-window -n "ARDUINO DOCS" \; send-keys "workon arduino" C-m C-l \; \
+    split-window -h \; send-keys "workon arduino" C-m C-l \; \
+    split-window \; send-keys "workon arduino" C-m C-l \; \
+   new-window -n misc \; \
+   select-window -t "ARDUINO" \; \
+  attach
+
+}
+
 function start_tmux() {
 
   local wrk_space=$1
   local FILIA="filia"
   local EULER="euler"
+  local ARDUINO="arduino"
 
   [ -n "$TMUX" ] && tmux ls | grep $wrk_space && echo "TMUX session is already running" && return 0
   #[ ! -z "$TMUX" ] && echo "TMUX is already running" && return 0
@@ -68,6 +92,12 @@ function start_tmux() {
     _start_filia
   fi
 
+  if [ "$wrk_space" = "$ARDUINO" ]; then
+    _start_arduino
+  fi
+
   return $?
 
-} 
+}
+
+
