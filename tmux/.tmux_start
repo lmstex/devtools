@@ -45,6 +45,24 @@ function _start_filia() {
 
 }
 
+function _start_books {
+
+  local books_dir=""
+
+  echo "Starting the BOOKS catalogue development workspace"
+
+  tmux new-session -s books \; \
+   rename-window "BOOKS" \; send-keys "workon books; vim" C-m C-l \; \
+    split-window -v \; send-keys "workon books" C-m C-l \; \
+   new-window -n "BOOKS MISC" \; send-keys "workon books; vim" C-m C-l \; \
+    split-window -v \; send-keys "workon books" C-m C-l \; \
+   new-window -n "BOOKS DOCS" \; send-keys "workon books" C-m C-l \; \
+    split-window -h \; send-keys "workon books" C-m C-l \; \
+   new-window -n misc \; \
+   select-window -t "BOOKS" \; \
+  attach
+
+}
 
 function _start_arduino() {
 
@@ -74,6 +92,7 @@ function start_tmux() {
   local FILIA="filia"
   local EULER="euler"
   local ARDUINO="arduino"
+  local BOOKS="books"
 
   [ -n "$TMUX" ] && tmux ls | grep $wrk_space && echo "TMUX session is already running" && return 0
   #[ ! -z "$TMUX" ] && echo "TMUX is already running" && return 0
@@ -95,6 +114,11 @@ function start_tmux() {
   if [ "$wrk_space" = "$ARDUINO" ]; then
     _start_arduino
   fi
+
+  if [ "$wrk_space" = "$BOOKS" ]; then
+    _start_books
+  fi
+
 
   return $?
 
