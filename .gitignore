@@ -50,3 +50,6 @@ Thumbs.db
 
 # Vim .swp files
 *.swp
+
+# Links in the utils directory
+utils/templates
