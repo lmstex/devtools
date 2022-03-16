@@ -1,0 +1,43 @@
+[31;1;4mProjutils[0;0m
+
+Project management utility functions.
+
+[31;1mCOMMANDS:[0;0m
+    [32;1mproj-new [-t|--type] NAME [0;0m
+
+        Creates a new project with the name specified in the NAME parameter. The name
+        of the project is expected to be unique.
+
+        [31;1mOPTIONS:[0;0m
+            [32;1m-t|--type [0;0m
+            Specifies the type of project. Default project type is 'GENERIC'
+
+    [32;1mproj-rm NAME [0;0m
+
+        Deletes the existing project specified in the NAME parameter. The project
+        must exist.
+
+    [32;1mproj-update [0;0m
+
+        Updates the installation of the projutils.
+
+    [32;1mproj-wrk NAME [0;0m
+
+        Start working on the project specified in the NAME argument, if the project
+        exists.
+
+    [32;1mproj-exit[0;0m
+        
+        Exit the project currently loaded (i.e the project the user is currently
+        working on)
+
+    [32;1mproj-version[0;0m
+
+        Reports the version of the projutils.
+
+    [32;1mproj-help[0;0m
+    
+        Shows the usage file
+
+
+For more information please refer to the project documentation.
