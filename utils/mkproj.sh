@@ -12,7 +12,7 @@ git init $REPO_DIR
 touch $REPO_DIR/.proj
 
 # Documentation directory
-mkdir $REPO_DIR/tests
+[ -d $REPO_DIR/tests ] || mkdir $REPO_DIR/tests
 
 # Readme, todo and license files
 cp $PROJUTILS/templates/generic/README.md \
@@ -24,9 +24,9 @@ cp $PROJUTILS/templates/generic/README.md \
 pip install --upgrade pip
 if ! pip list | grep -q mkdocs; then
   pip install mkdocs
-  mkdocs new .
+  mkdocs new $REPO_DIR
 fi
-pip install -r requirements.txt
+pip install -r $REPO_DIR/requirements.txt
 
 # Install the project type specific tools (e.g python tools, C, etc...)
 install=$PROJUTILS/templates/$PROJECT_TYPE/install.sh
