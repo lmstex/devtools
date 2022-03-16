@@ -53,3 +53,6 @@ Thumbs.db
 
 # Links in the utils directory
 utils/templates
+
+#Local directories
+.local/
