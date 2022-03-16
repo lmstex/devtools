@@ -1,0 +1,15 @@
+
+
+# Proj utils specific entries
+
+echo "Sporting wrkspace:$WRKSPACE"
+if [ -d "$PROJUTILS" ]; then
+  sed "s/%%WRKSPACE%%/$WRKSPACE/g
+       s|%%PROJUTILS%%|$PROJUTILS|g
+       s/%%PROJECT_TYPE%%/$PROJECT_TYPE/g" $PROJUTILS/postactivate.tpl > $WORKON_HOME/$WRKSPACE/bin/postactivate
+
+  # Reload the project with the new environment
+  deactivate
+  workon $WRKSPACE
+  $PROJUTILS/mkproj.sh
+fi
