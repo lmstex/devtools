@@ -95,7 +95,6 @@ function start_tmux() {
   local BOOKS="books"
 
   [ -n "$TMUX" ] && tmux ls | grep $wrk_space && echo "TMUX session is already running" && return 0
-  #[ ! -z "$TMUX" ] && echo "TMUX is already running" && return 0
 
   # Default behaviour
   if [ -z $wrk_space ]; then
@@ -105,22 +104,35 @@ function start_tmux() {
 
   if [ "$wrk_space" = "$EULER" ]; then
     _start_euler
+    return 0
   fi
 
   if [ "$wrk_space" = "$FILIA" ]; then
     _start_filia
+    return 0
   fi
 
   if [ "$wrk_space" = "$ARDUINO" ]; then
     _start_arduino
+    return 0
   fi
 
   if [ "$wrk_space" = "$BOOKS" ]; then
     _start_books
+    return 0
   fi
 
-
-  return $?
+  local tmux_proj_file="$PROJECT_HOME/$wrk_space/.tmux"
+  local tmux_start_func="start_${wrk_space}"
+  if [ -f "$tmux_proj_file" ]; then
+    source $tmux_proj_file
+    type $tmux_start_func &>/dev/null && return 0
+    echo "No tmux 'start function' is defined for project '$wrk_space'" 
+  else
+    echo "No tmux session is defined for project '$wrk_space'" 
+  fi
+      
+  return 1
 
 }
 
