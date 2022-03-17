@@ -35,6 +35,14 @@ Project management utility functions.
 
         Reports the version of the projutils.
 
+    [32;1mproj-home[0;0m
+    
+        Changes the current directory to the $PROJECT_HOME directory.
+
+    [32;1mproj-cd NAME[0;0m
+    
+        Changes the working directory of the project matching the NAME argument.
+
     [32;1mproj-help[0;0m
     
         Shows the usage file

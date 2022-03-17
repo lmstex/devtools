@@ -104,4 +104,23 @@ function proj-help {
   less -R $PROJUTILS/README
 }
 
+function proj-home {
+  cd $PROJECT_HOME
+}
+
+function proj-cd {
+  
+  local name=$1
+  [ -z "$name" ] && \
+    echo "Please specify the name of the project" && \
+    return 1
+
+  ! workon | grep $name && \
+    echo "Project '$name' does not exist" && \
+    return 1
+
+  cd $PROJECT_HOME/$name
+
+}
+
 _init
