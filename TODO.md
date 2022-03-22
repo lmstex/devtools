@@ -41,3 +41,6 @@
      port or have the port setup as a configuration variable. Make this an option
      which is not enabled by default.
 
+[] - Re-evaluate the implementation of the skip functionality in the .env file. It
+     does make much sense to have it implemented at the level of the produtils .env
+     file but rather at the level of the proj file.
