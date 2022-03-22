@@ -100,8 +100,35 @@ function proj-version {
 }
 
 function proj-help {
+
+  local placeholder="%%PROJ_DOCUMENTATION%%"
+  local gen_read_file=$PROJUTILS/README
+  local tmp_dir="/tmp" tmp_file
+  local lines_count=$(wc -l $gen_read_file | cut -d \  -f 1)
+  local proj_doc=${WRKSPACE}_docs
+
+  if [ -d "$REPO_DIR/.local/tmp" ]; then
+    tmp_dir=$REPO_DIR/.local/tmp
+  fi 
+  tmp_file=$tmp_dir/$(basename $gen_read_file)
+
+  if type "$proj_docs" &>/dev/null; then
+    local placeholder_line=$(grep -n "${placeholder}$" $gen_read_file | cut -d ':' -f 1)
+
+    if [ -n "$placeholder_line" ]; then
+      head -n $(( $placeholder_line - 1 )) $gen_read_file > $tmp_file
+      echo " " >> $tmp_file
+      $proj_docs >> $tmp_file
+      echo " " >> $tmp_file
+      tail -n $(( $lines_count - $placeholder_line )) $gen_read_file >> $tmp_file
+    else
+      echo "No project documentation placeholder marker in usage.txt file"
+    fi
+  else
+    sed "s/$placeholder//g" $gen_read_file > $tmp_file
+  fi 
   
-  less -R $PROJUTILS/README
+  less -R $tmp_file
 }
 
 function proj-home {
@@ -121,6 +148,10 @@ function proj-cd {
 
   cd $PROJECT_HOME/$name
 
+}
+
+function proj-docker-prune {
+  docker system prune
 }
 
 _init
