@@ -112,13 +112,13 @@ function proj-help {
   fi 
   tmp_file=$tmp_dir/$(basename $gen_read_file)
 
-  if type "$proj_docs" &>/dev/null; then
+  if type "$proj_doc" &>/dev/null; then
     local placeholder_line=$(grep -n "${placeholder}$" $gen_read_file | cut -d ':' -f 1)
 
     if [ -n "$placeholder_line" ]; then
       head -n $(( $placeholder_line - 1 )) $gen_read_file > $tmp_file
       echo " " >> $tmp_file
-      $proj_docs >> $tmp_file
+      $proj_doc >> $tmp_file
       echo " " >> $tmp_file
       tail -n $(( $lines_count - $placeholder_line )) $gen_read_file >> $tmp_file
     else
