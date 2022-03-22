@@ -121,13 +121,17 @@ function start_tmux() {
     _start_books
     return 0
   fi
-
+  
   local tmux_proj_file="$PROJECT_HOME/$wrk_space/.tmux"
   local tmux_start_func="start_${wrk_space}"
   if [ -f "$tmux_proj_file" ]; then
     source $tmux_proj_file
-    type $tmux_start_func &>/dev/null && return 0
-    echo "No tmux 'start function' is defined for project '$wrk_space'" 
+    if type $tmux_start_func &>/dev/null; then
+      $tmux_start_func && return 0
+      echo "Failed to start TMUX session for project '$wrk_space'" 
+    else
+      echo "No tmux 'start function' is defined for project '$wrk_space'" 
+    fi
   else
     echo "No tmux session is defined for project '$wrk_space'" 
   fi
