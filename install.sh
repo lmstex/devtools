@@ -60,11 +60,10 @@ function install-utils {
   # (this makes it easier to change things on the spot)
   ln -s $repo_dir/utils/.env $install_dir/.env
   ln -s $repo_dir/utils/postactivate.tpl $install_dir/postactivate.tpl
-  ln -s $repo_dir/utils/usage.txt $install_dir/README
   ln -s $repo_dir/version $install_dir/VERSION
   ln -s $repo_dir/install.sh $install_dir/update
   ln -s $repo_dir/utils/mkproj.sh $install_dir/mkproj.sh
-  #ln -s $repo_dir/utils/projutils.sh $install_dir/projutils
+  cp  $repo_dir/utils/usage.txt $install_dir/README
   sed "s|%%PROJUTILS%%|$install_dir|g" $repo_dir/utils/projutils.sh > $install_dir/projutils
   ln -s $repo_dir/templates $install_dir/templates
 
