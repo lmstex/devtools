@@ -82,9 +82,9 @@ set smartcase
 set showmatch
 map <leader><space> :let @/=''<cr>
 
-inoremap <F1> <ESC>:set invfullscreen<CR>a
-nnoremap <F1> :set invfullscreen<CR>
-vnoremap <F1> :set invfullscreen<CR>
+" inoremap <F1> <ESC>:set invfullscreen<CR>a
+" nnoremap <F1> :set invfullscreen<CR>
+" vnoremap <F1> :set invfullscreen<CR>
 
 map <leader>q gqip
 
@@ -99,7 +99,10 @@ set directory^=$HOME/.vim/swap//
 let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 colorscheme solarized
+let g:ctrlp_custom_ignore = ''
 
+" Ignore everything inside any obj directory
+set wildignore+=*/obj
 
 " Ctrlp configurations
 let g:ctrlp_map = '<c-p>'
@@ -167,3 +170,5 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 
 " Configurarion (.conf) file settings
 autocmd BufNewFile,BufRead *.conf set syntax=sh
+
+nmap <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
