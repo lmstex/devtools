@@ -138,9 +138,14 @@ function proj-home {
 function proj-cd {
   
   local name=$1
-  [ -z "$name" ] && \
-    echo "Please specify the name of the project" && \
+  if [ -z "$name" ]; then
+    if [ -n "$REPO_DIR" ]; then
+      cd $REPO_DIR
+      return 0
+    fi
+    echo "Please specify the name of the project"
     return 1
+  fi
 
   ! workon | grep $name && \
     echo "Project '$name' does not exist" && \

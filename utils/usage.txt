@@ -39,9 +39,11 @@ Project management utility functions.
     
         Changes the current directory to the $PROJECT_HOME directory.
 
-    [32;1mproj-cd NAME[0;0m
+    [32;1mproj-cd [NAME][0;0m
     
-        Changes the working directory of the project matching the NAME argument.
+        Changes the working directory of the project matching the NAME argument. If
+        the name is not specified and a project is currently in use this command
+        changes to the project's repository dir (i.e REPO_DIR)
 
     [32;1mproj-help[0;0m
     
