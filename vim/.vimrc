@@ -172,3 +172,7 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 autocmd BufNewFile,BufRead *.conf set syntax=sh
 
 nmap <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+
+if !empty(expand(glob("$REPO_DIR/.vimrc")))
+  source $REPO_DIR/.vimrc
+endif
