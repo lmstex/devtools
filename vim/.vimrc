@@ -102,7 +102,7 @@ colorscheme solarized
 let g:ctrlp_custom_ignore = ''
 
 " Ignore everything inside any obj directory
-set wildignore+=*/obj
+set wildignore+=*/obj,tags
 
 " Ctrlp configurations
 let g:ctrlp_map = '<c-p>'
