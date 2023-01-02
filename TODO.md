@@ -7,6 +7,11 @@
         [WIP]: 16-03-2022
           OBS> Added a usage file for documentation of how to use the projutils
                high-level commands
+        [WIP]: 22-03-2022
+          OBS> Updated the usage file with some new functions added in the meantime
+        [WIP]: 02-01-2023
+          OBS> Updated the README file with information on how to install the project
+               from the repo.
 
 [] - the tests do not perform any kind of clean up. We need to either properly
      document this behaviour or perform some clean up at the end of the test. 
@@ -17,6 +22,15 @@
 
 [] - migrate existing projects to projutils. We may need to create a projutils-import
      command for this.
+
+     Progress:
+        [WIP]: 22-03-2022
+          OBS> Migrated the projutils project itself as the first one. But it looks
+               like there are still some issues (e.g. REPO_DIR env var is not defined
+               for some reason when the project is loaded via the workon command).
+        [WIP]: 09-04-2022
+          OBS> Fixed the REPO_DIR variable problem. Still not sure whether the proj
+               is a projutils project. Further test required.
 
 [] - Update the mkproject to add the git config user name and email. Allow the user
      to configure those via some sort of env vars.
@@ -34,13 +48,14 @@
      install-deps.sh script if it exists)
 
 [] - Add a configuration file to the installed instance to allow the user to enable
-     features.
+     features (e.g plantuml container execution, pgadmin container execution, etc...).
 
 [] - Automatically start the plantuml server if not already running (docker run -d -p
-     8080:8080 plantuml/plantuml-server:jetty). If convivient we can use a different
+     8080:8080 plantuml/plantuml-server:jetty). If convinient we can use a different
      port or have the port setup as a configuration variable. Make this an option
      which is not enabled by default.
 
 [] - Re-evaluate the implementation of the skip functionality in the .env file. It
      does make much sense to have it implemented at the level of the produtils .env
      file but rather at the level of the proj file.
+[] - Add proj-todo function to open the list of TODO action (if any)

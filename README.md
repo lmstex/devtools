@@ -1,29 +1,8 @@
-# README #
+# Welcome to Projutils
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This project simply provides several tools to support the development of applications
+using the Linux console, tmux and vim as the primary tools.
 
-### What is this repository for? ###
+For more information on this project please refer to the project
+[documentation](./docs/index.md).
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
