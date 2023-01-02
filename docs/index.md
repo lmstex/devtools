@@ -19,7 +19,8 @@ Executing this command performs the follwing tasks:
 
 * checks whether all dependecies are available in the system, namely the mkvirtualenv
   dependency.
-* copies a set of files to the installation directory ```$HOME/.local/share/projutils
+* copies a set of files to the installation directory
+  ```$HOME/.local/share/projutils```
 
 
 
