@@ -1,7 +1,10 @@
 
 function _init {
 
-  export PROJUTILS=${PROJUTILS:-%%PROJUTILS%%} return 0 }
+  export PROJUTILS=${PROJUTILS:-%%PROJUTILS%%} 
+  
+  return 0 
+}
 
 function proj-new {
 
@@ -17,6 +20,53 @@ function proj-new {
 
   echo "Project generation failed"
   return 1
+}
+
+function proj-import {
+
+  # Imports an existing project into a GENERIC projutils project. 
+  
+  # Updates an existing project to become an projutils project
+  [ -z "$1" ] && \
+    echo "Please specify the directory of the project to include" && \
+    return 1
+
+  local proj_dir=$(realpath -e $1)
+  if [ "$?" != "0" ]; then
+    echo "The '$proj_dir' directory does not exist"
+    return 1
+  fi
+
+  local proj_name=$(basename $proj_dir)
+  local proj_parent_dir=$(dirname $proj_dir)
+
+  local tmp_dir=$(mktemp -d)
+  mv $proj_dir $tmp_dir &>/dev/null || \
+    { echo "ERR1: Failed to import the project. Move operation failed." && \
+      return 1; }
+  touch $tmp_dir/some_file_sporting
+
+  export WRKSPACE=$proj_name
+  if [ "$PROJECT_HOME" != "$proj_parent_dir" ]; then
+    # For project that are not located in the $PROJECT_HOME directory
+    CUSTOM_PROJECT_HOME=$proj_parent_dir \
+    PROJECT_HOME=$proj_parent_dir \
+      mkproject $proj_name
+  else
+    mkproject $proj_name
+  fi
+  [ "$?" = "0" ] || \
+    { echo "ERR2: Failed to create project '$proj_name'." &&  return 1; }
+
+  [ ! -d "$proj_dir" ] && \
+    { echo "ERR3: Failed to import project" && \
+      return 1; }
+
+  cp -R $tmp_dir/. $proj_dir
+  rm -rf $tmp_dir
+
+  echo "project '$proj_name' imported"
+
 }
 
 function proj-wrk {

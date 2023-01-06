@@ -9,6 +9,8 @@ function install-vim {
 }
 
 function install-tmux {
+
+  
   return 0
 }
 
@@ -45,7 +47,7 @@ function install-utils {
   local install_dir=$HOME/.local/share/projutils 
   local repo_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-  # Check the mkvirtualenv is available (currently this tools reliws on the
+  # Check the mkvirtualenv is available (currently this tools relies on the
   # mkvirtualenv package) 
   if [ -z "$VIRTUALENVWRAPPER_HOOK_DIR" ]; then
     echo "Please install the mkvirtualenv tool first"

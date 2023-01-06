@@ -23,4 +23,81 @@ Executing this command performs the follwing tasks:
   ```$HOME/.local/share/projutils```
 
 
+## Design
+
+WIP
+
+### Project creation
+
+**Command**: ```proj-new```
+
+The ```mkproject``` command from the ```virtualenvwrapper``` is at the heart of this
+function - it is used to create a new project. The proutils uses the postmkproject to
+perform further customisations as per the  ```utils/postmkproject``` file. The custom
+behavior is as follows:
+
+* Generate the project postactivate hook file from the template ```utils/postactivate.tpl```.
+* Load/reload the newly generated project (note that the newly created postactivate hook gets executed) to load all the project definition settings. Note that the postactivate script sources the ```utils/.env``` file, which contains the definition of all projutils enviroment hooks.
+* run the ```utils/mkproj.sh``` script for installing the project type specific tools
+  and artifacts.
+
+----------------------------------------------------
+
+**Note**
+
+All projects generated using this command will be located under the directory
+specified in the ```$PROJECT_HOME``` variable.
+
+----------------------------------------------------
+
+### Project activation
+
+**Command**: ```workon [PROJECT]``` 
+
+The ```workon``` command from the ```virtualwrapper``` is at the core of this
+feature. This postactivate hook is used for each project to perform the following
+actions:
+
+* Load the project specific enviromnet settings (e.g REPO_DIR, etc...) settings.
+  Project specific modifications (using the ```.proj``` and/or ```.tmux``` files
+  should not rely on the ```virtualenvwrapper``` environment definitions but reather
+  on the projutil definitios initialised in the postactivate hook.
+  The postactivate hook is generated whenever creating/importing a project.
+* The postactivate also sources the .env file which is the responsible for loading
+  all project specific customisations (see the project customisation section).
+
+### Project import
+
+**Command**: ```proj-import [PATH]``` 
+
+The ```mkproject``` command from the ```virtualwrapper``` is at the core of this
+feature. The feature implementation performs the following actions:
+
+* move the existing project directory to a temporary location.
+* sets the "CUSTOM_PROJECT_HOME" enviroment variable (if needed)
+* create a new project using the ```mkproject``` command.
+* copy original project directory from the temporary location back to the original
+  project location.
+
+The ```CUSTOM_PROJECT_HOME``` environment variable is the mechanism to allow
+projutils to override the ```PROJECT_HOME``` contraint imposed by ```virtualenvwrapper```. 
+
+----------------------------------------------------
+
+**Note**
+
+The override of the ```PROJECT_HOME``` limitation is currently only available via the
+```proj-import``` feature.
+
+----------------------------------------------------
+
+
+### Project customisation
+
+#### .proj
+ WIP
+
+#### .tmux
+
+WIP
 

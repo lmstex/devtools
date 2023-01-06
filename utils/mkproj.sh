@@ -5,6 +5,8 @@
   echo "Environment was not sourced" && \
   exit 1
 
+touch $REPO_DIR/sporting
+
 # Initialise the git repository
 git init $REPO_DIR
 
@@ -18,15 +20,13 @@ touch $REPO_DIR/.proj
 cp $PROJUTILS/templates/generic/README.md \
    $PROJUTILS/templates/generic/TODO.md \
    $PROJUTILS/templates/generic/.gitignore \
-   $PROJUTILS/templates/generic/LICENSE \
-   $PROJUTILS/templates/generic/requirements.txt $REPO_DIR
+   $PROJUTILS/templates/generic/LICENSE $REPO_DIR
 
 pip install --upgrade pip
 if ! pip list | grep -q mkdocs; then
   pip install mkdocs
   mkdocs new $REPO_DIR
 fi
-pip install -r $REPO_DIR/requirements.txt
 
 # Install the project type specific tools (e.g python tools, C, etc...)
 install=$PROJUTILS/templates/$PROJECT_TYPE/install.sh

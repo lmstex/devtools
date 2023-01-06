@@ -6,11 +6,18 @@ Project management utility functions.
     [32;1mproj-new [-t|--type] NAME [0;0m
 
         Creates a new project with the name specified in the NAME parameter. The name
-        of the project is expected to be unique.
+        of the project is expected to be unique and will be created as a subdirectory
+        of the $PROJECT_HOME directory.
 
         [31;1mOPTIONS:[0;0m
             [32;1m-t|--type [0;0m
             Specifies the type of project. Default project type is 'GENERIC'
+
+    [32;1mproj-import PATH [0;0m
+
+        Makes the project specified in PATH a projutils project. The directory in
+        PATH must exist. It is possible to import a project that is not
+        a subdirectory of PROJECT_HOME. 
 
     [32;1mproj-rm NAME [0;0m
 

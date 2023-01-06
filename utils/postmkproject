@@ -2,11 +2,16 @@
 
 # Proj utils specific entries
 
-echo "Sporting wrkspace:$WRKSPACE"
 if [ -d "$PROJUTILS" ]; then
   sed "s/%%WRKSPACE%%/$WRKSPACE/g
        s|%%PROJUTILS%%|$PROJUTILS|g
        s/%%PROJECT_TYPE%%/$PROJECT_TYPE/g" $PROJUTILS/postactivate.tpl > $WORKON_HOME/$WRKSPACE/bin/postactivate
+
+  # Allow for some project to be located on a different directory than the
+  # $PROJECT_HOME
+  if [ -n "$CUSTOM_PROJECT_HOME" ]; then
+    echo "$CUSTOM_PROJECT_HOME/$WRKSPACE" > $WORKON_HOME/$WRKSPACE/.project
+  fi
 
   # Reload the project with the new environment
   deactivate

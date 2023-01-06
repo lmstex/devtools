@@ -1,7 +1,7 @@
 # DEVENV project
 
-[] - Prepare the documentation for the project to document the installation and
-     usage of the projutils framework.
+[] - Prepare the documentation for the project to document the installation, design
+     and usage of the projutils framework.
 
      Progress:
         [WIP]: 16-03-2022
@@ -9,9 +9,12 @@
                high-level commands
         [WIP]: 22-03-2022
           OBS> Updated the usage file with some new functions added in the meantime
-        [WIP]: 02-01-2023
+        [WIP]: 05-01-2023
           OBS> Updated the README file with information on how to install the project
                from the repo.
+        [WIP]: 06-01-2023
+          OBS> Updated the docs/index.md to include some information on the design of
+               several ```projutils``` features. It still is a WIP.
 
 [] - the tests do not perform any kind of clean up. We need to either properly
      document this behaviour or perform some clean up at the end of the test. 
@@ -31,6 +34,10 @@
         [WIP]: 09-04-2022
           OBS> Fixed the REPO_DIR variable problem. Still not sure whether the proj
                is a projutils project. Further test required.
+        [WIP]: 05-01-2023
+          OBS> Add the proj-import function. But it still requires further testing.
+        [DONE]:06-01-2023
+          OBS> Completed.
 
 [] - Update the mkproject to add the git config user name and email. Allow the user
      to configure those via some sort of env vars.
@@ -58,4 +65,19 @@
 [] - Re-evaluate the implementation of the skip functionality in the .env file. It
      does make much sense to have it implemented at the level of the produtils .env
      file but rather at the level of the proj file.
+
 [] - Add proj-todo function to open the list of TODO action (if any)
+
+[] - Allow the proj-new command to add a new project to a parent directory which is
+     not the PROJECT_HOME (default behaviour). Note that the proj-import command is
+     already implementing that very same behaviour by allowing the import of projects
+     outside the PROJECT_HOME directory.
+
+[] - experiment testing the proj-utils platform using a vagrant/docker based approach
+     that allows a more flexible and reliable approach to testing this framework. Test
+     controller is the host, vagrant/docker provide the environment for test
+     execution. 
+
+[] - Update the .env file to double check on the virtualenvwrapper dependencies. If
+     those get removed the projutils may stop working. A simple verification as
+     performed in the install.sh script may be suficient.
