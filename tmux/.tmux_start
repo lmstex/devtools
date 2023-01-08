@@ -86,7 +86,7 @@ function _start_arduino() {
 
 }
 
-function start_tmux() {
+function start-tmux() {
 
   local wrk_space=${1:-"$WRKSPACE"}
   local FILIA="filia"
