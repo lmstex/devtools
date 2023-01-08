@@ -101,3 +101,22 @@ The override of the ```PROJECT_HOME``` limitation is currently only available vi
 
 WIP
 
+
+### Project utils startup
+
+The ```projutils``` framework installer updated the .zshrc file to source the
+```utils/projutils.sh``` file. This action adds a few utility functions into the
+environment (see the usage.txt file for more information on the available commands),
+starts the ```/usr/bin/ssh-agent``` process with whatever keys exist in the SSH_KEYS
+environment variables. The SSH_KEYS should be defined as an array of paths to the ssh
+key (private) key files.
+
+------------------------------------------------------------------------
+
+**Note**
+
+Password protected ssh keys are currently not supported. Make sure the SSH_KEYS env
+var does not include a PATH to a file associated to a password protected ssh key.
+
+------------------------------------------------------------------------
+

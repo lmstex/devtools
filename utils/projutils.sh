@@ -1,10 +1,30 @@
 
 function _init {
 
-  export PROJUTILS=${PROJUTILS:-%%PROJUTILS%%} 
+  export PROJUTILS=${PROJUTILS:-%%PROJUTILS%%}
+
+  local _ssh_env=${SSH_ENV:-"$HOME/.ssh/.agent"}
   
+  if [ -f "$_ssh_env" ]; then
+    . $_ssh_env &>/dev/null
+    ps -ef | grep "${SSH_AGENT_PID}" | grep ssh-agent$ &>/dev/null || \
+      _start_ssh_agent
+  else
+    _start_ssh_agent
+  fi
+
   return 0 
 }
+
+function _start_ssh_agent {
+  local k
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > $_ssh_env
+  chmod 600 "$_ssh_env"
+  . $_ssh_env
+  [ -n "$SSH_KEYS" ] && \
+    for k in "${SSH_KEYS[@]}"; do ssh-add $k &>/dev/null; done
+}
+
 
 function proj-new {
 
