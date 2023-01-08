@@ -88,13 +88,16 @@ function _start_arduino() {
 
 function start_tmux() {
 
-  local wrk_space=$1
+  local wrk_space=${1:-"$WRKSPACE"}
   local FILIA="filia"
   local EULER="euler"
   local ARDUINO="arduino"
   local BOOKS="books"
 
-  [ -n "$TMUX" ] && tmux ls | grep $wrk_space && echo "TMUX session is already running" && return 0
+  if tmux ls | grep $wrk_space; then
+    [ -n "$TMUX" ] && echo "TMUX session is already running" && return 0
+    tmux a -t $wrk_space && return 0
+  fi
 
   # Default behaviour
   if [ -z $wrk_space ]; then
@@ -122,7 +125,7 @@ function start_tmux() {
     return 0
   fi
   
-  local tmux_proj_file="$PROJECT_HOME/$wrk_space/.tmux"
+  local tmux_proj_file="$REPO_DIR/.tmux"
   local tmux_start_func="start_${wrk_space}"
   if [ -f "$tmux_proj_file" ]; then
     source $tmux_proj_file
