@@ -5,8 +5,6 @@
   echo "Environment was not sourced" && \
   exit 1
 
-touch $REPO_DIR/sporting
-
 # Initialise the git repository
 git init $REPO_DIR
 

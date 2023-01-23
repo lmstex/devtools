@@ -8,9 +8,9 @@ function _init {
   if [ -f "$_ssh_env" ]; then
     . $_ssh_env &>/dev/null
     ps -ef | grep "${SSH_AGENT_PID}" | grep ssh-agent$ &>/dev/null || \
-      _start_ssh_agent
+      _start_ssh_agent $_ssh_env
   else
-    _start_ssh_agent
+    _start_ssh_agent $_ssh_env
   fi
 
   return 0 
@@ -18,9 +18,9 @@ function _init {
 
 function _start_ssh_agent {
   local k
-  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > $_ssh_env
-  chmod 600 "$_ssh_env"
-  . $_ssh_env
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > $1
+  chmod 600 "$1"
+  . $1
   [ -n "$SSH_KEYS" ] && \
     for k in "${SSH_KEYS[@]}"; do ssh-add $k &>/dev/null; done
 }
@@ -64,7 +64,6 @@ function proj-import {
   mv $proj_dir $tmp_dir &>/dev/null || \
     { echo "ERR1: Failed to import the project. Move operation failed." && \
       return 1; }
-  touch $tmp_dir/some_file_sporting
 
   export WRKSPACE=$proj_name
   if [ "$PROJECT_HOME" != "$proj_parent_dir" ]; then
