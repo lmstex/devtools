@@ -13,6 +13,8 @@ function _init {
     _start_ssh_agent $_ssh_env
   fi
 
+  . $PROJUTILS/.tmux_start
+
   return 0 
 }
 
@@ -28,18 +30,51 @@ function _start_ssh_agent {
 
 function proj-new {
 
+  # Directory where all project are created
+  local proj_parent_dir=$PROJECT_HOME
+
+  # Name of the new project (a directory with the name of the project will
+  # be created in the $proj_parent_dir directory)
   local name=$1
   [ -z "$name" ] && \
     echo "Please specify the name of the project" && \
     return 1
 
+  # This is an OPTIONAL argument to specify the location where the project
+  # is to be created 
+  local location=$2
+
   export WRKSPACE=$name
-  mkproject $name && \
-    echo "Generic project '$name' successfully created" && \
-    return 0
+  if [ -n "$location" ]; then
+    echo "Creating project in $proj_parent_dir"
+    proj_parent_dir=$(realpath -e $location)
+    if [ "$?" != "0" ]; then
+      echo "The '$proj_parent_dir' directory does not exist"
+      return 1
+    fi
+  fi
+
+  #if [ -z "$location" ]; then
+  #  mkproject $name && \
+  #    echo "Generic project '$name' successfully created" && \
+  #    return 0
+#
+#    echo "Project generation failed"
+#    return 1
+#  fi
+
+  # The specified 'parent' directory must exist
+  #local proj_parent_dir=$(realpath -e $location)
+
+  # Override the PROJECT_HOME variable and create the new project
+  PROJECT_HOME=$proj_parent_dir \
+    mkproject $name && \
+      echo "Generic project '$name' successfully created" && \
+      return 0
 
   echo "Project generation failed"
   return 1
+
 }
 
 function proj-import {
