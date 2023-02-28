@@ -81,7 +81,6 @@ function proj-import {
 
   # Imports an existing project into a GENERIC projutils project. 
   
-  # Updates an existing project to become an projutils project
   [ -z "$1" ] && \
     echo "Please specify the directory of the project to include" && \
     return 1
@@ -100,15 +99,17 @@ function proj-import {
     { echo "ERR1: Failed to import the project. Move operation failed." && \
       return 1; }
 
-  export WRKSPACE=$proj_name
-  if [ "$PROJECT_HOME" != "$proj_parent_dir" ]; then
-    # For project that are not located in the $PROJECT_HOME directory
-    CUSTOM_PROJECT_HOME=$proj_parent_dir \
-    PROJECT_HOME=$proj_parent_dir \
-      mkproject $proj_name
-  else
-    mkproject $proj_name
-  fi
+  proj-new $proj_name $proj_parent_dir
+  #export WRKSPACE=$proj_name
+  #if [ "$PROJECT_HOME" != "$proj_parent_dir" ]; then
+  #  # For project that are not located in the $PROJECT_HOME directory
+  #  CUSTOM_PROJECT_HOME=$proj_parent_dir \
+  #  PROJECT_HOME=$proj_parent_dir \
+  #    mkproject $proj_name
+  #else
+  #  mkproject $proj_name
+  #fi
+
   [ "$?" = "0" ] || \
     { echo "ERR2: Failed to create project '$proj_name'." &&  return 1; }
 
@@ -116,7 +117,7 @@ function proj-import {
     { echo "ERR3: Failed to import project" && \
       return 1; }
 
-  cp -R $tmp_dir/. $proj_dir
+  cp -r $tmp_dir/$proj_name/. $proj_dir
   rm -rf $tmp_dir
 
   echo "project '$proj_name' imported"
