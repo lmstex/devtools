@@ -10,7 +10,10 @@ function install-vim {
 
 function install-tmux {
 
-  
+  # The installation is based on creatingn links to the original files in the
+  # repository. This approach makes it easier to change things and immediately see
+  # the effects
+  ln -s $repo_dir/tmux/.tmux_start $install_dir/.tmux_start
   return 0
 }
 
@@ -44,8 +47,8 @@ function update-file {
 
 function install-utils {
   
-  local install_dir=$HOME/.local/share/projutils 
-  local repo_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+  local install_dir=$1
+  local repo_dir=$2
 
   # Check the mkvirtualenv is available (currently this tools relies on the
   # mkvirtualenv package) 
@@ -87,8 +90,18 @@ function install-utils {
 
 }
 
-install-utils
-install-vim
-install-tmux
+function _main {
 
-echo "Projutils successfully installed - reload $(basename $SHELL)"
+  echo "Installing/Updating projutils"
+
+  local install_dir=$HOME/.local/share/projutils 
+  local repo_dir=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+
+  install-utils $install_dir $repo_dir
+  install-vim $install_dir $repo_dir
+  install-tmux $install_dir $repo_dir
+
+  echo "Projutils successfully installed - reload $(basename $SHELL)"
+}
+
+_main
