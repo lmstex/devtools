@@ -22,7 +22,7 @@ cp $PROJUTILS/templates/generic/README.md \
 
 pip install --upgrade pip
 if ! pip list | grep -q mkdocs; then
-  pip install mkdocs
+  pip install mkdocs virtualenvwrapper
   mkdocs new $REPO_DIR
 fi
 
